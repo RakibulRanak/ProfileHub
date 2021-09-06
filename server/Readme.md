@@ -1,2 +1,2 @@
-# Backend for SWE Society Website
+# Backend for ProfileHub 
 
