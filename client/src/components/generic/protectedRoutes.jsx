@@ -15,11 +15,12 @@ const ProtectedRoute = ({ component: Component, restrictedTo, ...rest }) => {
           ) : (
             <Redirect to="/" />
           );
-        } else if (loggedIn) {
+        } else if (true) {
           return <Component {...rest} {...props} />;
-        } else {
-          return <Redirect to="/signin" />;
-        }
+        } 
+        // else {
+        //   return <Redirect to="/signin" />;
+        // }
       }}
     />
   );

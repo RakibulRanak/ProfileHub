@@ -82,6 +82,11 @@ const MyNavbar = (props) => {
             Sign In
           </Button>
         )}
+         {!loggedIn && (
+          <Button as={RouterLink} to="/signup" bg="transparent" border="1px">
+            Sign Up
+          </Button>
+        )}
         {loggedIn && (
           <Button onClick={logoutHandler} bg="transparent" border="1px">
             Log Out

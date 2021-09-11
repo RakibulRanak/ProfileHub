@@ -7,6 +7,7 @@ const User = require('../models/UserModel')
 
 
 exports.protect = catchAsync(async (req, res, next) => {
+ 
   let token;
   if (req.cookies.jwt) {
     token = req.cookies.jwt;
@@ -17,16 +18,19 @@ exports.protect = catchAsync(async (req, res, next) => {
   if (!token)
     return next(new AppError('You are not logged in! Please log in to get access.', 401));
   const decoded = await promisify(jwt.verify)(token, process.env.jwtSecret);
+ // console.log(decoded)
   const currentUser = decoded.user;
-  console.log(currentUser);
+
+  
   const user = await Credential.findOne({
     where: {
-      reg_no: currentUser.reg_no
+      username: currentUser.username
     }, include: [{
       model: User,
       attributes: ['name']
     }]
   })
+  
   if (user == null)
     return next(new AppError('The user belonging to this token does no longer exist.', 401));
   const changedTimestamp = parseInt(user.updatedAt / 1000, 10);
@@ -34,11 +38,14 @@ exports.protect = catchAsync(async (req, res, next) => {
     return next(new AppError('Your credential changed recently.Please log in again', 401));
 
   //console.log(changedTimestamp, decoded.iat);
+  
   req.user = {
-    reg_no: user.reg_no,
     role: user.role,
-    name: user.user.name
+    username: user.username,
+    name : user.user.name
   };
+  //console.log(req.user)
+ 
   next();
 });
 

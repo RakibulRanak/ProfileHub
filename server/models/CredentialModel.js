@@ -10,18 +10,9 @@ const Credential = sequelize.define('credential', {
             notEmpty: true
         }
     },
-
     role: {
         type: DataTypes.STRING,
         defaultValue: "user",
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    status: {
-        type: DataTypes.STRING,
-        defaultValue: "student",
         allowNull: false,
         validate: {
             notEmpty: true

@@ -3,28 +3,24 @@ const { DataTypes } = require('sequelize');
 
 const User = sequelize.define('user', {
 
-    name: {
+    username: {
         type: DataTypes.STRING,
         noUpdate: true,
+        allowNull: false,
+        primaryKey: true,
+        validate: {
+            notEmpty: true
+        }
+    },
+    name: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: true
         }
     },
-    nick_name: {
-        type: DataTypes.STRING,
-    },
     address: {
         type: DataTypes.STRING,
-    },
-    reg_no: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        primaryKey: true,
-        validate: {
-            is: /[1-2][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/i
-        }
-
     },
     biography: {
         type: DataTypes.TEXT
@@ -36,11 +32,7 @@ const User = sequelize.define('user', {
     fb_link: {
         type: DataTypes.STRING,
     },
-    batch: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        noUpdate: true
-    },
+
     linkedin_link: {
         type: DataTypes.STRING,
     },

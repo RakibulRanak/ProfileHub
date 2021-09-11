@@ -11,7 +11,7 @@ const Credential = require('../models/CredentialModel');
 
 const createSendToken = (req, res, user, message) => {
 
-    const jwtToken = jwtGenerator({ reg_no: user.reg_no }, process.env.jwtSessionTokenExpire);
+    const jwtToken = jwtGenerator({ username: user.username }, process.env.jwtSessionTokenExpire);
 
     res.cookie('jwt', jwtToken, {
         expires: new Date(
@@ -27,7 +27,7 @@ const createSendToken = (req, res, user, message) => {
     const credential = {
         "id": user.id,
         "role": user.role,
-        "reg_no": user.reg_no,
+        "username": user.username,
         "email": user.email
     }
     user = user.user.dataValues;
@@ -80,7 +80,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
         length: 10,
         numbers: true
     });
-    const jwtToken = jwtGenerator({ reg_no: user.user.reg_no }, process.env.jwtResetTokenExpire);
+    const jwtToken = jwtGenerator({ username: user.user.username }, process.env.jwtResetTokenExpire);
     const url = `
     
     :3000/resetpassword/${jwtToken}`;
@@ -96,12 +96,12 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 exports.resetPassword = catchAsync(async (req, res, next) => {
     const token = req.params.token;
     const decoded = await promisify(jwt.verify)(token, process.env.jwtSecret);
-    const reg_no = decoded.user.reg_no;
+    const username = decoded.user.username;
     const salt = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(req.body.password, salt);
     await Credential.update({ password },
         {
-            where: { reg_no }
+            where: { username }
         }
     );
     res.status(200).json({
@@ -114,7 +114,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     const { oldpassword, newpassword } = req.body;
     const user = await Credential.findOne({
         where: {
-            reg_no: req.user.reg_no
+            username: req.user.username
         },
         include: [User]
     });
@@ -126,7 +126,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     const password = await bcrypt.hash(newpassword, salt);
     await Credential.update({ password },
         {
-            where: { reg_no: req.user.reg_no }
+            where: { username: req.user.username }
         }
     );
     createSendToken(req, res, user, 'Successfully Updated Password!');
@@ -147,7 +147,7 @@ exports.changeEmail = catchAsync(async (req, res, next) => {
     const { token, password } = req.body;
     const user = await Credential.findOne({
         where: {
-            reg_no: req.user.reg_no
+            username: req.user.username
         }
     });
     const validPass = await bcrypt.compare(password, user.password);
@@ -157,7 +157,7 @@ exports.changeEmail = catchAsync(async (req, res, next) => {
     const email = decoded.user.email;
     await Credential.update({ email },
         {
-            where: { reg_no: req.user.reg_no }
+            where: { username: req.user.username }
         }
     );
     res.status(200).json({

@@ -13,29 +13,36 @@ const Sequelize = require('sequelize');
 
 exports.registerUser = catchAsync(async (req, res, next) => {
   const Op = Sequelize.Op;
-  const { email, reg_no, name } = req.body;
+  const { email, username,name } = req.body;
+  console.log(email,username)
   let user = await Credential.findOne({
-    where: {
-      [Op.or]: [{ reg_no }, { email }]
-    }
+    where: 
+      { email }
   });
+  if (user)
+    return next(new AppError('Email is already used!', 405));
+  user = await User.findOne({
+    where: 
+      { username }
+  });
+  console.log(user)
   if (user)
     return next(new AppError('User Already Exist!', 405));
   const randompassword = generator.generate({
     length: 10,
     numbers: true
   });
-  const message = `<div>Hey ${name}, Your account is created for Swe Society.Your first time password is <h1>${randompassword}</h1><br> 
+  const message = `<div>Hey ${username}, Your account is created for Swe Society.Your first time password is <h1>${randompassword}</h1><br> 
                           Please change this password after first login.</div>`;
 
   const salt = await bcrypt.genSalt(10);
   const password = await bcrypt.hash(randompassword, salt);
-  const batch = reg_no.substring(0, 4);
-  user = await User.create({ name, reg_no, batch });
+  user = await User.create({ username,name});
 
   let er = false;
-  await Credential.create({ reg_no, email, password }).catch(err => {
-    User.destroy({ where: { reg_no } })
+  await Credential.create({ email, password,username }).catch(err => {
+    console.log(err)
+    User.destroy({ where: { username } })
     er = true;
   });
   if (er)
@@ -50,37 +57,15 @@ exports.registerUser = catchAsync(async (req, res, next) => {
 });
 
 
-exports.getAllUser = catchAsync(async (req, res, next) => {
-  const users = await User.findAll();
-  res.status(200).json({
-    status: 'success',
-    users
-  });
-});
-
-exports.broadcastUser = catchAsync(async (req, res, next) => {
-  const users = await Credential.findAll({ include: [User] });
-  if (users.length == 0)
-    next(new AppError(`No user found!`, 404));
-  users.forEach((element) => {
-    const message = `Dear ${element.user.name}, ${req.body.message}`;
-    sendEmail(element.email, req.body.subject, message);
-  });
-  res.status(200).json({
-    status: 'success'
-  });
-});
-
-
 exports.getSingleUser = catchAsync(async (req, res, next) => {
-  const reg_no = req.params.reg_no || req.user.reg_no;
+  const username = req.params.username || req.user.username;
   const user = await User.findOne({
     where: {
-      reg_no
+      username
     }, include: [Credential, Education, WorkExperience],
   });
   if (user == null)
-    return next(new AppError(`User with Registration number : ${reg_no} not found!`, 404));
+    return next(new AppError(`User with Username : ${username} not found!`, 404));
   user.credential.password = undefined;
   res.status(200).json({
     status: 'success',
@@ -89,10 +74,10 @@ exports.getSingleUser = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUser = catchAsync(async (req, res, next) => {
-  const reg_no = req.user.reg_no;
+  const username = req.user.username;
   const user = await User.update(req.body,
     {
-      where: { reg_no },
+      where: { username },
       returning: true
     });
   res.status(200).json({

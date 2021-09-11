@@ -27,6 +27,7 @@ const BasicEditModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user, login, unauthorizedHandler } = useContext(AuthContext);
   const [editedUser, setEditedUser] = useState({
+    name:user.name,
     fb_link: user.fb_link,
     linkedin_link: user.linkedin_link,
     git_link: user.git_link,
@@ -85,24 +86,15 @@ const BasicEditModal = () => {
           <ModalHeader>Update Profile</ModalHeader>
           <form onSubmit={handleSubmit}>
             <ModalBody>
-              <FormControl mb={2} id="full-name">
+              <FormControl mb={2} id="full_name">
                 <FormLabel>Full Name</FormLabel>
-                <Input type="text" value={user.name} disabled />
-                <FormHelperText>
-                  Please contact admin to change full name
-                </FormHelperText>
-              </FormControl>
-
-              <FormControl mb={2} id="nickname">
-                <FormLabel>Nickname</FormLabel>
-                <Input
-                  type="text"
-                  value={editedUser.nick_name}
-                  onChange={(e) =>
-                    setEditedUser({ ...editedUser, nick_name: e.target.value })
-                  }
+                <Input type="text" value={editedUser.name} 
+                 onChange={(e) =>
+                  setEditedUser({ ...editedUser, name: e.target.value })
+                }
                 />
               </FormControl>
+
 
               <FormControl mb={2} id="biography">
                 <FormLabel>Biography</FormLabel>

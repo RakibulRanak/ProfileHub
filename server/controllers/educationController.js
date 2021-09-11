@@ -3,8 +3,8 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 exports.createEducation = catchAsync(async (req, res, next) => {
-    const reg_no = req.user.reg_no;
-    req.body.reg_no = reg_no;
+    const username = req.user.username;
+    req.body.username = username;
     const education = await Education.create(req.body);
     res.status(200).json({
         status: 'success',
@@ -14,10 +14,10 @@ exports.createEducation = catchAsync(async (req, res, next) => {
 
 
 exports.getEducationDetails = catchAsync(async (req, res, next) => {
-    const reg_no = req.params.reg_no;
+    const username = req.params.username;
     const education = await Education.findAll({
         where: {
-            reg_no
+            username
         }
     });
     // if (education.length == 0)
@@ -37,7 +37,7 @@ exports.updateEducation = catchAsync(async (req, res, next) => {
     });
     if (!education)
         return next(new AppError(`Education with this id does not exist`, 404));
-    if (req.user.reg_no != education.reg_no)
+    if (req.user.username != education.username)
         return next(new AppError(`Not allowed to perform this action`, 403));
     education = await Education.update(req.body,
         {
@@ -60,7 +60,7 @@ exports.deleteEducation = catchAsync(async (req, res, next) => {
     });
     if (!education)
         return next(new AppError(`Education with this id does not exist`, 404));
-    if (req.user.reg_no != education.reg_no)
+    if (req.user.username != education.username)
         return next(new AppError(`Not allowed to perform this action`, 403));
     await Education.destroy({
         where: {
