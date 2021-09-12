@@ -33,7 +33,7 @@ exports.registerUser = catchAsync(async (req, res, next) => {
     length: 10,
     numbers: true
   });
-  const message = `<div>Hey ${username}, Your account is created for Swe Society.Your first time password is <h1>${randompassword}</h1><br> 
+  const message = `<div>Hey ${username}, Your account is created for ProfileHub.Your password is <h1>${randompassword}</h1><br> 
                           Please change this password after first login.</div>`;
 
   const salt = await bcrypt.genSalt(10);
@@ -49,7 +49,7 @@ exports.registerUser = catchAsync(async (req, res, next) => {
   if (er)
     return next(new AppError('Not A Valid Email!', 405));
 
-  sendEmail(email, 'Greetings from Swe Society', message);
+  sendEmail(email, 'Greetings from ProfileHub', message);
   res.status(201).json({
     status: 'success',
     pass: randompassword,

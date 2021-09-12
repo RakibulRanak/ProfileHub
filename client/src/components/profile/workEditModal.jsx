@@ -183,7 +183,6 @@ const WorkEditModal = (work) => {
                   selected={editedWork.leaving_date}
                   isClearable
                   minDate={editedWork.joining_date}
-                  maxDate={new Date()}
                   placeholderText="Currently Working Here"
                   onChange={(date) =>
                     setEditedWork({

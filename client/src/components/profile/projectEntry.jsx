@@ -4,6 +4,8 @@ import ProjectEditModal from "./projectEditModal";
 
 const ProjectEntry = ({ project }) => {
   const edit = useLocation().pathname.startsWith("/profile");
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   return (
     <Box m={3}>
@@ -15,11 +17,11 @@ const ProjectEntry = ({ project }) => {
 
       {project.start_date && (
         <>
-          <Text display="inline">•</Text>
-          <Text fontSize="sm" display="inline" ml={2}>
-            {new Date(project.start_date).getFullYear()} -{" "}
+         
+          <Text fontSize="sm" display="inline" ml={0}>
+            {monthNames[new Date(project.start_date).getMonth()]}{" "}{new Date(project.start_date).getFullYear()}-{" "}
             {project.end_date
-              ? new Date(project.end_date).getFullYear()
+              ? (monthNames[new Date(project.end_date).getMonth()]+" "+new Date(project.end_date).getFullYear())
               : "Present"}
           </Text>
         </>

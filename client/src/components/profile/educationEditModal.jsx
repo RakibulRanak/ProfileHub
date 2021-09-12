@@ -34,6 +34,7 @@ const EducationEditModal = (education) => {
       : null,
     description: education.description,
     subject: education.subject,
+    location: education.location,
   });
   const [requestState, setRequestState] = useState("none");
   const [deleteRequestState, setDeleteRequestState] = useState("none");
@@ -117,6 +118,19 @@ const EducationEditModal = (education) => {
                     setEditedEducation({
                       ...editedEducation,
                       institute: e.target.value,
+                    })
+                  }
+                />
+              </FormControl>
+              <FormControl mb={2} id="location">
+                <FormLabel>Location</FormLabel>
+                <Input
+                  type="text"
+                  value={editedEducation.location}
+                  onChange={(e) =>
+                    setEditedEducation({
+                      ...editedEducation,
+                      location: e.target.value,
                     })
                   }
                 />

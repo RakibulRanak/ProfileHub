@@ -35,7 +35,7 @@ const WorkExperience = sequelize.define('workExperience', {
         type: DataTypes.DATE
     },
     description: {
-        type: DataTypes.STRING
+        type: DataTypes.TEXT
     }
 
 });

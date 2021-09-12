@@ -82,9 +82,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
         numbers: true
     });
     const jwtToken = jwtGenerator({ username: user.user.username }, process.env.jwtResetTokenExpire);
-    const url = `
-    
-    :3000/resetpassword/${jwtToken}`;
+    const url = `localhost:3000/resetpassword/${jwtToken}`;
     const message = `<h3>Hey ${user.user.name},Click here and reset your password within 5 minutes</h3>
                     <p>${url}</p>`;
     sendEmail(email, 'Reset Password', message);

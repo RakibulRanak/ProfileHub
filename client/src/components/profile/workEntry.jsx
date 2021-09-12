@@ -4,6 +4,9 @@ import WorkEditModal from "./workEditModal";
 
 const WorkEntry = ({ work }) => {
   const edit = useLocation().pathname.startsWith("/profile");
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 
   return (
     <Box m={3}>
@@ -25,9 +28,9 @@ const WorkEntry = ({ work }) => {
       <>
         <Text display="inline">•</Text>
         <Text fontSize="sm" display="inline" ml={2}>
-          {new Date(work.joining_date).getFullYear()} -{" "}
+        {monthNames[new Date(work.joining_date).getMonth()]}{" "}{new Date(work.joining_date).getFullYear()}-{" "}
           {work.leaving_date
-            ? new Date(work.leaving_date).getFullYear()
+            ? (monthNames[new Date(work.leaving_date).getMonth()]+" "+new Date(work.leaving_date).getFullYear())
             : "Present"}
         </Text>
       </>

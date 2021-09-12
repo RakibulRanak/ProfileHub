@@ -149,7 +149,6 @@ const WorkAddModal = () => {
                   selected={newWork.leaving_date}
                   isClearable
                   minDate={newWork.joining_date}
-                  maxDate={new Date()}
                   placeholderText="Currently Working Here"
                   onChange={(date) =>
                     setNewWork({

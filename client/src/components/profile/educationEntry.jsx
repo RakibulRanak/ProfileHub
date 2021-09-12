@@ -4,6 +4,8 @@ import EducationEditModal from "./educationEditModal";
 
 const EducationEntry = ({ education }) => {
   const edit = useLocation().pathname.startsWith("/profile");
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   return (
     <Box m={3}>
@@ -33,9 +35,10 @@ const EducationEntry = ({ education }) => {
         <>
           <Text display="inline">•</Text>
           <Text fontSize="sm" display="inline" ml={2}>
-            {new Date(education.joining_date).getFullYear()} -{" "}
+            
+          {monthNames[new Date(education.joining_date).getMonth()]}{" "}{new Date(education.joining_date).getFullYear()}-{" "}
             {education.leaving_date
-              ? new Date(education.leaving_date).getFullYear()
+              ?  (monthNames[new Date(education.leaving_date).getMonth()]+" "+new Date(education.leaving_date).getFullYear())
               : "Present"}
           </Text>
         </>

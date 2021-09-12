@@ -31,6 +31,7 @@ const EducationAddModal = (education) => {
     leaving_date: null,
     description: "",
     subject: "",
+    location: "",
   });
   const [requestState, setRequestState] = useState("none");
   const toast = useToast();
@@ -81,6 +82,19 @@ const EducationAddModal = (education) => {
                     setEditedEducation({
                       ...editedEducation,
                       institute: e.target.value,
+                    })
+                  }
+                />
+              </FormControl>
+              <FormControl mb={2} id="location">
+                <FormLabel>Location</FormLabel>
+                <Input
+                  type="text"
+                  value={editedEducation.location}
+                  onChange={(e) =>
+                    setEditedEducation({
+                      ...editedEducation,
+                      location: e.target.value,
                     })
                   }
                 />
