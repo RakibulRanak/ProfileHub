@@ -6,6 +6,7 @@ import ProfileBasics from "../components/profile/basics";
 import Skills from "../components/profile/skills";
 import Education from "../components/profile/education";
 import Work from "../components/profile/work";
+import Project from "../components/profile/project";
 import LoadingSkeleton from "../components/profile/skeleton";
 import { AuthContext } from "../contexts/authContext";
 import { useLocation, useParams } from "react-router-dom";
@@ -77,6 +78,9 @@ const Profile = ({ userId }) => {
               )}
               {user.workExperiences?.length > 0 && (
                 <Work works={user.workExperiences} />
+              )}
+               {user.projects?.length > 0 && (
+                <Project project={user.projects} />
               )}
             </Box>
           </Grid>

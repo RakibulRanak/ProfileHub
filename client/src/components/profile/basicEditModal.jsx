@@ -34,7 +34,6 @@ const BasicEditModal = () => {
     phone: user.phone,
     date_of_birth: new Date(user.date_of_birth),
     biography: user.biography,
-    nick_name: user.nick_name,
     address: user.address,
   });
   const [requestState, setRequestState] = useState("none");

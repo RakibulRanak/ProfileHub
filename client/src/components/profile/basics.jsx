@@ -11,6 +11,8 @@ import {
   Text,
   useToast,
   VisuallyHidden,
+  useClipboard ,
+  Button,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext, useRef, useState } from "react";
@@ -31,6 +33,8 @@ const ProfileBasics = ({ user }) => {
   const imageRef = useRef(null);
   const toast = useToast();
   const history = useHistory();
+  const [value, setValue] = useState(`http://localhost:3000/user/${user.username}`)
+  const { hasCopied, onCopy } = useClipboard(value)
 
   const handleFileInput = (e) => {
     setFileLoading(true);
@@ -101,11 +105,11 @@ const ProfileBasics = ({ user }) => {
             {user.biography}
           </Text>
         )}
-
+        
         <Stack direction="row" my={2}>
-          <Badge colorScheme="green" variant="outline">
-            {user.credential.role}
-          </Badge>
+          <Button onClick={onCopy} size="xs" ml={1}>
+          {hasCopied ? "Copied" : "Copy profile link"}
+        </Button>
         </Stack>
 
         <Box my={2}>

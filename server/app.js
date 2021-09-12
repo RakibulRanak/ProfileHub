@@ -9,6 +9,7 @@ const router = require('./routes');
 const userRoutes = require('./routes/userRoutes');
 const workExperienceRoutes = require('./routes/workExperienceRoutes');
 const educationRoutes = require('./routes/educationRoutes');
+const projectRoutes = require('./routes/projectRoutes');
 const imageUploadRoutes = require('./routes/imageUploadRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
@@ -43,6 +44,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(express.static(__dirname + '/public/media/'));
 app.use('/api/imageupload', imageUploadRoutes);
 app.use('/api/education', educationRoutes);
+app.use('/api/project', projectRoutes)
 app.use('/api/user', userRoutes);
 app.use('/api/workexp', workExperienceRoutes);
 app.get('/api/', (req, res) => {

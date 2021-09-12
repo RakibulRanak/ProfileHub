@@ -9,6 +9,7 @@ const sendEmail = require('./../utils/sendEmail');
 const Education = require('../models/EducationModel');
 const WorkExperience = require('../models/WorkExperienceModel');
 const Sequelize = require('sequelize');
+const Project = require('../models/ProjectModel');
 
 
 exports.registerUser = catchAsync(async (req, res, next) => {
@@ -62,7 +63,7 @@ exports.getSingleUser = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     where: {
       username
-    }, include: [Credential, Education, WorkExperience],
+    }, include: [Credential, Education, WorkExperience,Project],
   });
   if (user == null)
     return next(new AppError(`User with Username : ${username} not found!`, 404));

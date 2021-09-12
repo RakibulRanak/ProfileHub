@@ -38,7 +38,7 @@ const Education = sequelize.define('education', {
         type: DataTypes.DATE
     },
     description: {
-        type: DataTypes.STRING
+        type: DataTypes.TEXT
     }
 
 });

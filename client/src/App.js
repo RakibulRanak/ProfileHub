@@ -28,7 +28,7 @@ function App() {
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup" component={SignUp} />
         <ProtectedRoute exact path="/profile" component={Profile} />
-        <ProtectedRoute exact path="/user/:id" component={Profile}/>
+        <Route exact path="/user/:id" component={Profile}/>
         <ProtectedRoute exact path="/changeemail" component={ChangeEmail}/>
         <Route exact path="/resetpassword/:token" component={ResetPassword}/>
         <Route path="*" component={NotFound} />

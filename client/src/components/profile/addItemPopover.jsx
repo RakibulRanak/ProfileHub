@@ -1,5 +1,6 @@
 import { AddIcon } from "@chakra-ui/icons";
 import {
+  Flex,
   IconButton,
   Popover,
   PopoverArrow,
@@ -11,6 +12,7 @@ import {
 import EducationAddModal from "./educationAddModal";
 import WorkAddModal from "./workAddModal";
 import SkillsEditModal from "./skillsEditModal";
+import ProjectAddModal from "./projectAddModal";
 
 const AddItemPopover = (props) => {
   return (
@@ -32,9 +34,13 @@ const AddItemPopover = (props) => {
         <PopoverContent>
           <PopoverArrow />
           <PopoverBody>
+            <Flex>
             <EducationAddModal />
             <WorkAddModal />
+            <ProjectAddModal/>
+            
             <SkillsEditModal isFloating />
+            </Flex>
           </PopoverBody>
         </PopoverContent>
       </Portal>

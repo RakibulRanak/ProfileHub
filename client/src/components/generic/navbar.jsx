@@ -63,12 +63,7 @@ const MyNavbar = (props) => {
      
         {loggedIn && (
           <>
-            <MenuItems to="/profile">Profile</MenuItems>
-      
-            {(user.credential.role === "admin" ||
-              user.credential.role === "superadmin") && (
-              <MenuItems to="/admin">Admin</MenuItems>
-            )}
+            <MenuItems to="/profile">{user.username}</MenuItems>
           </>
         )}
       </Box>

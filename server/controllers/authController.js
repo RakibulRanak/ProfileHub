@@ -7,7 +7,7 @@ const User = require('../models/UserModel')
 
 
 exports.protect = catchAsync(async (req, res, next) => {
- 
+  //console.log("???????????????")
   let token;
   if (req.cookies.jwt) {
     token = req.cookies.jwt;
@@ -44,7 +44,6 @@ exports.protect = catchAsync(async (req, res, next) => {
     username: user.username,
     name : user.user.name
   };
-  //console.log(req.user)
  
   next();
 });

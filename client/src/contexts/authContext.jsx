@@ -34,8 +34,9 @@ const AuthProvider = (props) => {
 
   const logoutHandler = (e) => {
     logout();
-    axios.post("/api/user/logout").finally(() => {
-      return <Redirect to="/" />;
+    console.log("here");
+    axios.get("/api/user/logout").finally(() => {
+      return <Redirect to="/signin" />;
     });
   };
 

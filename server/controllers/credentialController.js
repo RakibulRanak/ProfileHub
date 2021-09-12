@@ -62,6 +62,7 @@ exports.logout = (req, res) => {
         expires: new Date(Date.now() + 10 * 1000),
         httpOnly: true
     });
+    console.log("loginng out...")
     res.status(200).json({ status: 'success' });
 };
 
